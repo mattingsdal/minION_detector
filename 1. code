@@ -1,1 +1,21 @@
+### code assumes query in home direcory and fastq files in home/fastq
+module load blast+
+module load bwa
+
+query=stx2.fa
+bwa index $query
+
+# align with bwa mem and remove unmapped reads (0x04) flag, export bam file
+# cound number of reads and dump counts in "hits"
+# export kept reads to fasta
+
+for f in *fastq
+do
+bwa mem -t 10 -k 16 ${query} ${f} | samtools view -buS - | samtools sort - | samtools view -b -F 0x04 - > bam/${f}.bam
+samtools fasta -t bam/${f}.bam >${f}.fasta
+done
+
+# concatenate all fasta files and blast with query file
+samtools view -c bam/${f}.bam >>${query}.hits
+cat *.fasta >${query}.all.fasta
 
