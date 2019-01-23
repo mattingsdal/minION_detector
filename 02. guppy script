@@ -1,15 +1,18 @@
+### the following code loops though fast5 direceoty and basecall.
+### contains a check to se if we resume a run
+
+
 cd fast5
 
 for d in */ ; do
 
-	if [ -d "../fastq/${d}"] then
+	if [ -d ../fastq/${d} ];then
 
 	 echo "fastq dir found. skipping"
 	else
 
-	mkdir /$home/DB_handouts
-	 chmod 777 /$home/DB_handouts
-	~/software/ont-guppy-cpu/bin/guppy_basecaller -i ${d} -s fastq/${d} .c ~/software/ont-guppy-cpu/data/dna_r9.4.1.450bps.cfg
+	~/software/ont-guppy-cpu/bin/guppy_basecaller -i ${d} -s ../fastq/${d} -c ~/software/ont-guppy-cpu/data/dna_r9.4.1_450bps.cfg
 	fi
 done
+
 
