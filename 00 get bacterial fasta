@@ -2,6 +2,8 @@ curl 'ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/bacteria/assembly_summary.txt' |
 awk '{FS="\t"} !/^#/ {print $20} ' | \
 sed -r 's|(ftp://ftp.ncbi.nlm.nih.gov/genomes/all/.+/)(GCF_.+)|\1\2/\2_genomic.fna.gz|' > genomic_file
 
-wget -i genomic_file
+URL_LIST="cat genomic_file"
+$URL_LIST | xargs -n 1 -P 8 wget -q
+
 cat *.fna > all_bacteria_fna_files.fna
 
