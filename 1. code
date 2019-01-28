@@ -3,7 +3,7 @@
 module load blast+
 module load bwa
 
-query=../query/efa1.fa
+query=efa1.fa
 bwa index $query
 
 # align with bwa mem and remove unmapped reads (0x04) flag, export bam file
@@ -14,11 +14,11 @@ find -maxdepth 2  -name *fastq -type f >files
 
 cat files | while read i; do
 
-while read -u 10 i; do
-  bwa mem -t 4 -k 16 ../query/${query} ${i} | samtools view -buS - | samtools sort - | samtools view -b -F 0x04 - > ../bam/${i}_${query}.bam
-  samtools index ../bam/${i}_${query}.bam
-  samtools fasta -t ../bam/${i}_${query}.bam >../fasta/${i}.${query}
-done <files
+for i in *fastq*
+  bwa mem -t 4 -k 16 efa1.fa ${i} | samtools view -buS - | samtools sort - | samtools view -b -F 0x04 - > ../bam/${i}.bam
+  samtools index ../bam/${i}.bam
+  samtools fasta -t ../bam/${i}.bam >../fasta/${i}.${query}
+done
 
 
  
