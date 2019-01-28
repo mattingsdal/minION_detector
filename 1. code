@@ -15,6 +15,7 @@ find -maxdepth 2  -name *fastq -type f >files
 cat files | while read i; do
 
 for i in *fastq*
+do
   bwa mem -t 4 -k 16 efa1.fa ${i} | samtools view -buS - | samtools sort - | samtools view -b -F 0x04 - > ../bam/${i}.bam
   samtools index ../bam/${i}.bam
   samtools fasta -t ../bam/${i}.bam >../fasta/${i}.${query}
