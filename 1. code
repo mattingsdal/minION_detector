@@ -13,9 +13,9 @@ bwa index $query
 find -maxdepth 2  -name *fastq -type f >files
 
 for i in files; do
-  bwa mem -t 4 -k 16 query/${query} ${i} | samtools view -buS - | samtools sort - | samtools view -b -F 0x04 - > bam/${i}_${query}.bam
-  samtools index bam/${i}_${query}.bam
-  samtools fasta -t bam/${i}_${query}.bam >fasta/${i}.${query}
+  bwa mem -t 4 -k 16 query/${query} ${i} | samtools view -buS - | samtools sort - | samtools view -b -F 0x04 - > ../bam/${i}_${query}.bam
+  samtools index ../bam/${i}_${query}.bam
+  samtools fasta -t ../bam/${i}_${query}.bam >../fasta/${i}.${query}
 done
 
 
