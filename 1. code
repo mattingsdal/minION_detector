@@ -10,12 +10,16 @@ bwa index $query
 # cound number of reads and dump counts in "hits"
 # export kept reads to fasta
 
-for f in *fastq
-do
-bwa mem -t 10 -k 16 ${query} ${f} | samtools view -buS - | samtools sort - | samtools view -b -F 0x04 - > bam/${f}_${query}.bam
-samtools index bam/${f}_${query}.bam
-samtools fasta -t bam/${f}_${query}.bam >fasta/${f}.${query}
+find -maxdepth 2  -name *fastq -type f | while read filename; do
+
+  for f in *fastq
+  do
+  bwa mem -t 10 -k 16 ${query} ${f} | samtools view -buS - | samtools sort - | samtools view -b -F 0x04 - > bam/${f}_${query}.bam
+  samtools index bam/${f}_${query}.bam
+  samtools fasta -t bam/${f}_${query}.bam >fasta/${f}.${query}
+  done
 done
+
 
 # concatenate all fasta files and blast with query file
 wc -l fasta/*stx2.fa >stx2.hits
