@@ -15,7 +15,4 @@ for d in */ ; do
 	fi
 done
 
-cd ../fastq
-
-find . -name "*.fastq" -type f -exec cp {} ./fastq_all \;
 
