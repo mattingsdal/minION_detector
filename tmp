@@ -1,0 +1,26 @@
+
+#!/bin/bash
+# Dette scriptet kopierer fastq filer fortløpende til en målkatalog.
+# Det sjekker for nye filer hver 15 min (900 sekunder) og kopierer kun nye filer. Må ha rsync i begge "ender".
+
+while true; do
+	echo "Running rsync"
+	rsync -r -t /path/to/fastq mortema@abel.uio.no:nanopore/
+	sleep 900
+done
+
+
+
+
+### minimap2 loop
+
+while true; do
+	echo "Running minimap2"
+	minimap2 whatever
+	sleep 1800
+	if results > 3
+	do
+	# bruk -a for å legge til sekvensene som "attachmenet"
+	echo "DNA treff på EHEC" | mailx -s "Du mottar denne mailen fordi vi har registrert mer 3 eller flere EHEC sekvenser i ditt materiale" -r "Morten<morten.mattingsdal@gmail.com>" morten.mattingsdal@uia.no
+	done
+	
